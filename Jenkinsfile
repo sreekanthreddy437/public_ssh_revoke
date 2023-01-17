@@ -1,13 +1,6 @@
 pipeline {
     agent any
     
-    parameters {
-        choice(
-          name: 'Env',
-          choices: ['Cloudzenix/Devsbx', 'Opssbx'],
-          description: 'Passing the Environment'
-        )
-    }
 
     environment {
         BRANCH_NAME     = "${env.BRANCH_NAME}"
@@ -68,7 +61,7 @@ pipeline {
         }
         stage('Deploy to Cloudzenix'){
             when {
-                expression { "${params.Env}" == 'Cloudzenix/Devsbx' }
+                expression { "${GIT_BRANCH}" == 'master' }
                  }
             steps {
                 echo "${BRANCH_NAME}"
@@ -79,7 +72,7 @@ pipeline {
         }
         stage('Deploy to Devsbx'){
             when {
-                expression { "${params.Env}" == 'Cloudzenix/Devsbx' }
+                expression { "${GIT_BRANCH}" == 'master' }
                  }
             steps {
                 echo "${BRANCH_NAME}"
@@ -90,7 +83,7 @@ pipeline {
         }
         stage('Deploy to Opssbx'){
             when {
-                expression { "${params.Env}" == 'Opssbx' }
+                expression { "${GIT_BRANCH}" =! 'master' }
                  }
             steps {
                 echo "${BRANCH_NAME}"
