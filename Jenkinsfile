@@ -21,7 +21,7 @@ pipeline {
             steps{
                 //git branch: '${BRANCH_NAME}', credentialsId: 'MY_BB_CRED', url: 'https://SreekantReddy@bitbucket.org/cloudzenix/iam-event-detection.git'
                 //git branch: '${BRANCH_NAME}', credentialsId: 'MY_BB_CRED', url: 'https://SreekantReddy@bitbucket.org/cloudzenix/iam-event-detection.git'
-                git credentialsId: 'MY_BB_CRED', url: 'git clone https://SreekantReddy@bitbucket.org/cloudzenix/public_ssh_revoke.git'
+                git credentialsId: 'MY_BB_CRED', url: 'https://SreekantReddy@bitbucket.org/cloudzenix/public_ssh_revoke.git'
                 
                 //checkout scm
                 //echo "${BRANCH_NAME}"
