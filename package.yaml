@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: This stack will remove ssh port which is open to everywhere
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  Functionname:
+    Description: Lambda Function Name
+    Type: String
+    Default: public-ssh-revoke
+  SlackUrl:
+    Description: enter slack webhook to receive alerts
+    Type: String
+    Default: https://hooks.slack.com/services/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
+  TeamsUrl:
+    Description: enter teams webhook to receive alerts
+    Type: String
+    Default: https://cloudzenix.webhook.office.com/webhookb2/6b3ba5ea-708c-4629-9f20-7c1b09d46619@0ca8b1bf-7c75-4720-85bf-8569448da8a3/IncomingWebhook/f16a9d9f437c4b32b5d290dd3e529a72/e6dbaf6f-fc1e-47ac-b2cd-b59a44638d22
+Resources:
+  Sshpubliclambda:
+    Type: AWS::Serverless::Function
+    Description: lambda for event trigger
+    Properties:
+      FunctionName:
+        Ref: Functionname
+      Timeout: 600
+      MemorySize: 1024
+      Runtime: python3.7
+      CodeUri: s3://cfnbucketopssbx/0b8ec416ff36e86c70329f84e5992947
+      Handler: public_ssh_revoke_lambda.lambda_handler
+      Environment:
+        Variables:
+          port: '22'
+          slack_url:
+            Ref: SlackUrl
+          teams_url:
+            Ref: TeamsUrl
+      Events:
+        SshpublicEvent:
+          Type: CloudWatchEvent
+          Properties:
+            Pattern:
+              source:
+              - aws.ec2
+              detail-type:
+              - AWS API Call via CloudTrail
+              detail:
+                eventSource:
+                - ec2.amazonaws.com
+                eventName:
+                - AuthorizeSecurityGroupIngress
+                - CreateSecurityGroup
+      Policies:
+      - AWSLambdaExecute
+      - Version: '2012-10-17'
+        Statement:
+        - Sid: log
+          Action:
+          - logs:PutLogEvents
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          Effect: Allow
+          Resource:
+          - arn:aws:logs:*:*:log-group:*
+        - Sid: sg
+          Action:
+          - ec2:RevokeSecurityGroupIngress
+          - ec2:CreateTags
+          - ec2:RevokeSecurityGroupEgress
+          - ec2:DescribeSecurityGroupReferences
+          - ec2:DescribeTags
+          - ec2:DescribeSecurityGroups
+          Effect: Allow
+          Resource:
+          - '*'

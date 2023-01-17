@@ -1,13 +1,6 @@
 pipeline {
     agent any
-    
-    parameters {
-        choice(
-          name: 'Env',
-          choices: ['Cloudzenix/Devsbx', 'Opssbx'],
-          description: 'Passing the Environment'
-        )
-    }
+
 
     environment {
         BRANCH_NAME     = "${env.BRANCH_NAME}"
