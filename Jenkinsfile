@@ -1,13 +1,6 @@
 pipeline {
     agent any
     
-    parameters {
-        choice(
-          name: 'Env',
-          choices: ['Cloudzenix/Devsbx', 'Opssbx'],
-          description: 'Passing the Environment'
-        )
-    }
 
     environment {
         BRANCH_NAME     = "${env.BRANCH_NAME}"
@@ -26,12 +19,7 @@ pipeline {
     stages {
        stage('checkout'){
             steps{
-                //git branch: '${BRANCH_NAME}', credentialsId: 'MY_BB_CRED', url: 'https://SreekantReddy@bitbucket.org/cloudzenix/iam-event-detection.git'
-                //git branch: '${BRANCH_NAME}', credentialsId: 'MY_BB_CRED', url: 'https://SreekantReddy@bitbucket.org/cloudzenix/iam-event-detection.git'
-                git credentialsId: 'MY_BB_CRED', url: 'git clone https://SreekantReddy@bitbucket.org/cloudzenix/public_ssh_revoke.git'
-                
-                //checkout scm
-                //echo "${BRANCH_NAME}"
+                git credentialsId: 'MY_BB_CRED', url: 'https://SreekantReddy@bitbucket.org/cloudzenix/public_ssh_revoke.git'
             }
        }
         stage('Build') {
@@ -68,7 +56,7 @@ pipeline {
         }
         stage('Deploy to Cloudzenix'){
             when {
-                expression { "${params.Env}" == 'Cloudzenix/Devsbx' }
+                expression { "${GIT_BRANCH}" == 'masterw' }
                  }
             steps {
                 echo "${BRANCH_NAME}"
@@ -79,7 +67,7 @@ pipeline {
         }
         stage('Deploy to Devsbx'){
             when {
-                expression { "${params.Env}" == 'Cloudzenix/Devsbx' }
+                expression { "${GIT_BRANCH}" == 'masterw' }
                  }
             steps {
                 echo "${BRANCH_NAME}"
@@ -90,7 +78,7 @@ pipeline {
         }
         stage('Deploy to Opssbx'){
             when {
-                expression { "${params.Env}" == 'Opssbx' }
+                expression { "${GIT_BRANCH}" == 'master' }
                  }
             steps {
                 echo "${BRANCH_NAME}"
@@ -120,3 +108,4 @@ def OwncfnUpdater(account_id) {
             cfnUpdate(stack:"${STACK_NAME}", url:"https://s3.amazonaws.com/${ARTEFACT_BUCKET_NAME}/package/package.yaml")
     }
 }
+
