@@ -4,8 +4,6 @@ pipeline {
 
     environment {
         BRANCH_NAME     = "${env.BRANCH_NAME}"
-        FULL_PATH_BRANCH = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
-        GIT_BRANCH = FULL_PATH_BRANCH.substring(FULL_PATH_BRANCH.lastIndexOf('/') + 1, FULL_PATH_BRANCH.length())
         AWS_DEFAULT_REGION = 'us-east-1'
         POLL_INTERVAL = 1000
         DURATION = 3600
