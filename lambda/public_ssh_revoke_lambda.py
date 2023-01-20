@@ -9,12 +9,12 @@ from botocore.exceptions import ClientError
 slack_url = os.environ['slack_url']
 teams_url = os.environ['teams_url']
 port = int(os.environ['port'])
-# blocked_port1 = int(os.environ['blocked_port1'])
-# blocked_port2 = int(os.environ['blocked_port2'])
+blocked_port1 = int(os.environ['blocked_port1'])
+blocked_port2 = int(os.environ['blocked_port2'])
 # blocked_port3 = int(os.environ['blocked_port3'])
 # blocked_port4 = int(os.environ['blocked_port4'])
 # blocked_port5 = int(os.environ['blocked_port5'])
-blocked_ports = [port]
+blocked_ports = [port,blocked_port1,blocked_port2]
 
 def lambda_handler(event, context):
     print("##########3")
