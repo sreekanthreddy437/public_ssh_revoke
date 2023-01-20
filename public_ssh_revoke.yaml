@@ -29,6 +29,9 @@ Resources:
       Environment:
         Variables:
           port: '22'
+          blocked_port1: '0'
+          blocked_port2: '65535'
+          logging_level: 'info'
           slack_url: !Ref SlackUrl
           teams_url: !Ref TeamsUrl
       Events:
