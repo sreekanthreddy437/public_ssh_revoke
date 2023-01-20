@@ -14,7 +14,7 @@ pipeline {
         POLL_INTERVAL = 1000
         DURATION = 3600
         ROLE_NAME = 'Jenkins-deployer-role'
-        STACK_NAME = 'Public_SSH-22_Revoke_stack'
+        STACK_NAME = 'Public_SSH_Revoke_Stack'
         TEMPLATE_FILE = 'public_ssh_revoke.yaml'
         PROJECT_NAME = 'Public_SSH_Revoke'
         ARTEFACT_BUCKET_NAME = credentials('artefact-bucket-name')
