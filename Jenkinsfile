@@ -3,7 +3,7 @@ pipeline {
     parameters {
     choice(
       name: 'Env',
-      choices: ['Cloudzenix&Devsbx', 'Opssbx'],
+      choices: ['Cloudzenix&Devsbx', 'TechTeam_India'],
       description: 'Passing the Environment'
     )
   }
