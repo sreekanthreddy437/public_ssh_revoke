@@ -9,7 +9,7 @@ Parameters:
   SlackUrl:
     Description: enter slack webhook to receive alerts
     Type: String
-    Default:  https://hooks.slack.com/services/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
+    Default:  https://hooks.slack.com/services/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
   TeamsUrl:
     Description: enter teams webhook to receive alerts
     Type: String
