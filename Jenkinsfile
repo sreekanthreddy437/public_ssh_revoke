@@ -82,7 +82,7 @@ pipeline {
         }
         stage('Deploy to TechTeam_India'){
             when {
-                expression { "${params.Env}" == 'Opssbx' }
+                expression { "${params.Env}" == 'TechTeam_India' }
                  }
             steps {
                 echo "${BRANCH_NAME}"
