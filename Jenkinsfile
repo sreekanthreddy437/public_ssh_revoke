@@ -23,7 +23,7 @@ pipeline {
     stages {
        stage('checkout'){
             steps{
-                git credentialsId: 'MY_BB_CRED', url: 'https://SreekantReddy@bitbucket.org/cloudzenix/public_ssh_revoke.git'
+                git credentialsId: 'BB_CREDS', url: 'https://bitbucket.org/cloudzenix/public_ssh_revoke/src/master'
             }
        }
         stage('Build') {
@@ -80,14 +80,14 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Opssbx'){
+        stage('Deploy to TechTeam_India'){
             when {
                 expression { "${params.Env}" == 'Opssbx' }
                  }
             steps {
                 echo "${BRANCH_NAME}"
                 script {
-                        OwncfnUpdater('602011150591')
+                        OwncfnUpdater('980783347387')
                 }
             }
         }   
